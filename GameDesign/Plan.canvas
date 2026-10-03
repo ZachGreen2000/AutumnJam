@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"bf5398c9ae14f2e6","type":"text","text":"<h1 align = \"center\">Autumn Jam</h1> ","x":-120,"y":-600,"width":320,"height":80,"color":"3"},
+		{"id":"ca5efd0b3382dd27","type":"file","file":"Game Mechanics.md","x":-160,"y":-480,"width":400,"height":600,"color":"3"},
+		{"id":"4d35345d72b8b504","type":"text","text":"Watch Two Foods","x":-515,"y":-460,"width":250,"height":60,"color":"5"},
+		{"id":"4f9417a8d18704d8","type":"text","text":"Complete cooked foods quickly to earn points","x":-515,"y":-240,"width":250,"height":60,"color":"5"},
+		{"id":"5c1b85db953feb7c","type":"text","text":"Next level increases amount of foods you watch","x":-520,"y":-139,"width":250,"height":60,"color":"5"},
+		{"id":"d0bec784240ab36e","type":"text","text":"Keep playing until Failure","x":-512,"y":-45,"width":250,"height":60,"color":"5"},
+		{"id":"4fc216a4893c24a7","type":"text","text":"Switch between each food to ensure they don't over cook","x":-540,"y":-360,"width":300,"height":80,"color":"5"},
+		{"id":"d6bdda810f3f4622","type":"text","text":"<h1 align = \"center\"> Loop<h1/>\n","x":-468,"y":-551,"width":157,"height":62,"color":"5"},
+		{"id":"59ee845d255caa6a","x":320,"y":-520,"width":640,"height":1089,"color":"2","type":"file","file":"Architecture.md"}
+	],
+	"edges":[
+		{"id":"355b21dc4793ca80","fromNode":"4d35345d72b8b504","fromSide":"right","toNode":"4fc216a4893c24a7","toSide":"right"},
+		{"id":"298deb4f61593d22","fromNode":"4fc216a4893c24a7","fromSide":"left","toNode":"4f9417a8d18704d8","toSide":"left"},
+		{"id":"60459381fbe0fc62","fromNode":"4f9417a8d18704d8","fromSide":"right","toNode":"5c1b85db953feb7c","toSide":"right"},
+		{"id":"0e782bd3db0a41d6","fromNode":"5c1b85db953feb7c","fromSide":"left","toNode":"d0bec784240ab36e","toSide":"left"}
+	]
+}
