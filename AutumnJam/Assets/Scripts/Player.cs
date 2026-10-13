@@ -5,6 +5,9 @@ public class Player : MonoBehaviour
     public Camera Cam;
     public float distance;
 
+    public GameEvent onObserveSoup;
+    public GameEvent onObserveCheese;
+
     // move the camera left and right with A and D keys
     private void Move()
     {
@@ -15,10 +18,12 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             DesiredLocation = DesiredLocationR;
+            onObserveSoup.TriggerEvent();
         }
         else if (Input.GetKey(KeyCode.A))
         {
             DesiredLocation = DesiredLocationL;
+            onObserveCheese.TriggerEvent();
         }
         Cam.transform.position = Vector2.Lerp(currentLocation, DesiredLocation, Time.deltaTime);
     }
