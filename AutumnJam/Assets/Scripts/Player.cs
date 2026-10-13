@@ -29,17 +29,37 @@ public class Player : MonoBehaviour
         {
             DesiredLocation = new Vector3(DesiredLocationR.x, DesiredLocationR.y, -10);
             onObserveSoup.TriggerEvent();
+            Cam.transform.position = Vector3.Lerp(currentLocation, DesiredLocation, Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             DesiredLocation = new Vector3(DesiredLocationL.x, DesiredLocationL.y, -10);
             onObserveCheese.TriggerEvent();
+            Cam.transform.position = Vector3.Lerp(currentLocation, DesiredLocation, Time.deltaTime);
         }
-        Cam.transform.position = Vector3.Lerp(currentLocation, DesiredLocation, Time.deltaTime);
+        
+    }
+
+    private void alternateMove()
+    {
+        Vector3 currentLocation = Cam.transform.position;
+        Vector3 DesiredLocation = new Vector3(0, 0, -10);
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            DesiredLocation = new Vector3(DesiredLocationR.x, DesiredLocationR.y, -10);
+            onObserveSoup.TriggerEvent();
+        }
+        else if (Input.GetKeyDown(KeyCode.G))
+        {
+            DesiredLocation = new Vector3(DesiredLocationL.x, DesiredLocationL.y, -10);
+            onObserveCheese.TriggerEvent();
+        }
+        Cam.transform.position = Vector3.Lerp(currentLocation, DesiredLocation, Time.deltaTime * 5f);
     }
 
     void Update()
     {
         Move();
+        //alternateMove();
     }
 }
