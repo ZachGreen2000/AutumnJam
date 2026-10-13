@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour 
 {
 
+    public static GameManager instance; // singleton instance of the GameManager
+
     public float score;
     public float highScore;
     public int level;
@@ -17,10 +19,10 @@ public class GameManager : MonoBehaviour
     private bool soupObserved = false; // to check if the soup has been observed
     private bool cheeseObserved = false;
 
-    private foodData soup; // data for the food items in the game
-    private foodData cheese; 
+    public foodData soup; // data for the food items in the game
+    public foodData cheese; 
 
-    private List<string> foodItems; // to store the current food items in the level
+    private List<string> foodItems = new List<string>(); // to store the current food items in the level
 
     [Header ("FoodPrefabs")]
     public GameObject soupPrefab;
@@ -33,12 +35,13 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        instance = this;
         score = 0;
         highScore = 0;
         level = 1;
         // building the default food items 
-        soup.foodName = "Tomato_Soup"; soup.cookTime = 30; soup.stages = 3; soup.currentStage = 1; 
-        cheese.foodName = "Cheese"; cheese.cookTime = 20; cheese.stages = 3; cheese.currentStage = 1;
+        soup.foodName = "Tomato_Soup"; soup.cookTime = 300; soup.stages = 3; soup.currentStage = 1; 
+        cheese.foodName = "Cheese"; cheese.cookTime = 200; cheese.stages = 3; cheese.currentStage = 1;
         // add the food items to the dictionary
         foodItems.Add(soup.foodName);
         foodItems.Add(cheese.foodName);
@@ -51,7 +54,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (levelStart) { soupCooking = true; cheeseCooking = true; soupController(); cheeseController(); }
-
+        Debug.Log("currentSoupTime: " + currentSoupTime + " currentCheeseTime: " + currentCheeseTime);
     }
 
     // score manager
@@ -87,19 +90,21 @@ public class GameManager : MonoBehaviour
         {
             if (currentSoupTime <= 0 && currentSoupTime > 0.2f)
             {
-                // logic for taking food off the hob and adding points to the score
+                Debug.Log("Soup is cooked");
+                // ui pop up to say cooked here
+                // allow player to quickly press space to take the food off the hob and add points to the score
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    AddScore(10);
+                    currentSoupTime = soup.cookTime;
+                }
             } else if (currentSoupTime <= 0.2f)
             {
+                Debug.Log("Soup is burnt");
+                // ui pop up to say burnt here
                 // logic for burning the food and taking points off the score
             }
-            if (soupObserved)
-            {
-                currentSoupTime = currentSoupTime - Time.deltaTime;
-            }
-            else
-            {
-                currentSoupTime = currentSoupTime - speedUpAmount * Time.deltaTime;
-            }
+            currentSoupTime -= (soupObserved ? 1f : speedUpAmount) * Time.deltaTime;
             // logic for cooking soup
         }
     }
@@ -111,13 +116,15 @@ public class GameManager : MonoBehaviour
         {
             if (currentCheeseTime <= 0 && currentCheeseTime > 0.2f)
             {
+                Debug.Log("Cheese is cooked");
                 // logic for taking food off the hob and adding points to the score
             }
             else if (currentCheeseTime <= 0.2f)
             {
+                Debug.Log("Cheese is burnt");
                 // logic for burning the food and taking points off the score
             }
-            currentSoupTime -= (soupObserved ? 1f : speedUpAmount) * Time.deltaTime;
+            
             currentCheeseTime -= (cheeseObserved ? 1f : speedUpAmount) * Time.deltaTime;
             // logic for cooking cheese
         }
@@ -128,10 +135,12 @@ public class GameManager : MonoBehaviour
     {
         if (foodName == soup.foodName)
         {
+            Debug.Log("Soup observed");
             soupObserved = true;
             cheeseObserved = false;
         } else if (foodName == cheese.foodName)
         {
+            Debug.Log("Cheese observed");
             cheeseObserved = true;
             soupObserved = false;
         }
